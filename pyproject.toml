@@ -1,0 +1,22 @@
+[project]
+name = "genshin-auto"
+version = "2.0.0"
+description = "Genshin Impact dialogue auto-skipper with auto-resolution detection and hook-free hotkeys"
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = [
+    "pyautogui==0.9.54",
+    "pyscreeze==0.1.28",
+    "python-dotenv==1.0.0",
+    "pywin32>=306",
+    "pillow>=10.0.0",
+]
+
+[tool.ruff]
+line-length = 88
+target-version = "py311"
+
+[tool.ruff.lint]
+# Broad exception handling is intentional: screen/input APIs can raise
+# platform-specific errors that must never kill the skip loop.
+ignore = ["BLE001", "S110"]

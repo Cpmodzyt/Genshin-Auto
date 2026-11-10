@@ -1,0 +1,8 @@
+# Runtime dependencies for Genshin Auto
+# Python 3.11+ on Windows
+
+pyautogui==0.9.54
+PyScreeze==0.1.28
+python-dotenv==1.0.0
+pywin32>=306
+pillow>=10.0.0
