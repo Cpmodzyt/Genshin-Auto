@@ -17,6 +17,47 @@ natural ~1 second interval. It only acts while the game is focused.
 
 ---
 
+## ⬇️ Download
+
+<p align="center">
+  <a href="https://github.com/Cpmodzyt/Genshin-Auto/archive/refs/heads/main.zip">
+    <img src="https://img.shields.io/badge/Download-Latest_ZIP-2ea44f?style=for-the-badge" alt="Download the latest ZIP">
+  </a>
+  <a href="https://github.com/Cpmodzyt/Genshin-Auto">
+    <img src="https://img.shields.io/badge/View-Repository-181717?style=for-the-badge&logo=github" alt="View repository">
+  </a>
+</p>
+
+**➡️ [Click here to download the latest ZIP](https://github.com/Cpmodzyt/Genshin-Auto/archive/refs/heads/main.zip)**
+
+> ### 📂 IMPORTANT — extract the ZIP to a permanent drive
+>
+> **Do NOT run the tool from `Downloads`, `Desktop`, or a temporary folder.**
+> Windows and cleanup tools can delete those folders, and then the tool stops
+> working.
+>
+> Extract the ZIP to one of these instead:
+>
+> - **`D:\Genshin-Auto`** — recommended if you have a `D:` drive
+> - **`C:\Genshin-Auto`** — always available
+>
+> Use an **internal** drive, not a USB stick or a network share.
+>
+> You can also move the whole folder there after extracting:
+>
+> 1. Right-click the ZIP → **Extract All…**
+> 2. Choose `D:\` (or `C:\`) as the destination.
+> 3. Rename the extracted folder to **`Genshin-Auto`**.
+> 4. Run `run.bat` from there.
+>
+> **`run.bat` detects risky locations automatically** and offers to copy the
+> folder to `D:\Genshin-Auto` or `C:\Genshin-Auto` for you.
+>
+> If you use `git clone`, clone directly into `D:\Genshin-Auto` — relocation
+> copies the application files but not the `.git` history.
+
+---
+
 ## ✨ What's new in v2.0
 
 | Fix / feature | Why it matters |
@@ -37,6 +78,7 @@ natural ~1 second interval. It only acts while the game is focused.
 
 ## 📋 Table of Contents
 
+- [Download](#-download)
 - [Features](#-features)
 - [Requirements](#-requirements)
 - [Installation](#-installation)
@@ -83,8 +125,11 @@ natural ~1 second interval. It only acts while the game is focused.
 - **Python:** 3.11 or newer (3.12/3.13 recommended)
 - **Privileges:** Administrator recommended (required for reliable key input)
 - **Game setting:** **Settings → Other → Auto-Play Story = Off**
-- The game must be on the **primary monitor** (multi-monitor capture is not
-  supported by this version).
+- The game must be on the **primary monitor** and run **fullscreen or
+  borderless-fullscreen at your desktop resolution**. A small windowed game
+  does not match the detection points.
+- Keep the in-game **UI scale** at its default value; extreme UI scaling can
+  move the dialogue indicators.
 
 ---
 
@@ -92,24 +137,27 @@ natural ~1 second interval. It only acts while the game is focused.
 
 ### Option 1 — `run.bat` (recommended)
 
-1. Clone the repository:
+1. **Download the ZIP** using the button at the top of this page, or clone:
    ```bat
    git clone https://github.com/Cpmodzyt/Genshin-Auto.git
    cd Genshin-Auto
    ```
-   (Or download the ZIP from the GitHub page.)
-2. Right-click **`run.bat` → Run as administrator**.
+2. **Extract to `D:\Genshin-Auto` or `C:\Genshin-Auto`.** Do not leave it in
+   `Downloads` or `Temp` — those folders can be cleaned automatically.
+3. Right-click **`run.bat` → Run as administrator**.
    - If you forget, it will ask Windows for elevation itself.
+   - If the folder is in a risky location, it offers to relocate it first.
    - It verifies Python 3.11+, creates `.venv`, installs only the missing
      dependencies, re-checks that they import, validates the config, and only
      then starts the app.
-3. On first run it records your screen size in `.env`.
+4. On first run it records your screen size in `.env`.
 
 You can also pass options through the launcher:
 
 ```bat
 run.bat --probe
 run.bat --hotkey-test
+run.bat --press-test
 run.bat --debug
 ```
 
@@ -330,8 +378,9 @@ made.
 3. Confirm `Dialogue playing` or `Options available` becomes `True`.
 4. Confirm `Foreground` is `Genshin Impact` (not the launcher).
 5. Ensure **Auto-Play Story** is **Off** in game settings.
-6. Make sure the game is on the **primary monitor** and not borderless
-   across multiple monitors.
+6. Make sure the game is on the **primary monitor**, is fullscreen or
+   borderless-fullscreen at the desktop resolution, and uses the default UI
+   scale.
 
 ### Detection never triggers
 
@@ -341,6 +390,13 @@ made.
   the RGB values in an issue.
 - If your resolution was changed after the last launch, no problem — v2
   re-detects it automatically every time.
+
+### `run.bat` asks to move the folder
+
+That is the relocation safety check. It appears when the tool is running from
+`Downloads`, `Desktop`, `Temp`, `AppData`, or OneDrive. Answer **Y** to copy it
+to `D:\Genshin-Auto` (or `C:\Genshin-Auto`) and start from there. Answer **N**
+to keep the current location, but be aware that Windows may delete it later.
 
 ### `run.bat` closes immediately
 
