@@ -117,6 +117,7 @@ echo ============================================
 echo   Tip: you can pass options through run.bat
 echo        run.bat --probe
 echo        run.bat --hotkey-test
+echo        run.bat --press-test
 echo        run.bat --debug
 echo ============================================
 echo.

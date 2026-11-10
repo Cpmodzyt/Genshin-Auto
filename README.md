@@ -203,6 +203,17 @@ run.bat --hotkey-test
 Press F8 / F9 / F7 / F12 (or Esc to stop). Each detected key is printed. If
 nothing is printed, run the terminal as Administrator.
 
+### `--press-test`
+
+```bat
+run.bat --press-test
+```
+
+Waits 5 seconds, then sends the interact key once. Use it to separate
+"hotkeys are broken" from "the game ignores synthetic key presses". If this
+does nothing, run the launcher as Administrator and try windowed/borderless
+mode.
+
 ### `--debug`
 
 ```bat

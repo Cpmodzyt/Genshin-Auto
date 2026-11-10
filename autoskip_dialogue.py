@@ -1032,6 +1032,11 @@ def build_parser() -> argparse.ArgumentParser:
         help="verify that the start/pause/quit keys are detected, then exit",
     )
     parser.add_argument(
+        "--press-test",
+        action="store_true",
+        help="send the interact key once after a 5 second countdown, then exit",
+    )
+    parser.add_argument(
         "--debug", action="store_true", help="print detection details while running"
     )
     parser.add_argument(
@@ -1088,7 +1093,30 @@ def main(argv: Iterable[str] | None = None) -> int:
         print(f"  [error] {exc}")
         return 2
 
-    detector = Detector(config, layout)
+    try:
+        detector = Detector(config, layout)
+    except (ValueError, KeyError) as exc:
+        print(f"  [error] {exc}")
+        return 2
+
+    if args.press_test:
+        print_banner(config)
+        print("  KEY PRESS TEST")
+        print(
+            f"  Focus the game window. Sending '{config.confirm_button}' in 5 seconds..."
+        )
+        print("  (This only tests key injection; it does not check dialogue.)")
+        for remaining in range(5, 0, -1):
+            print(f"    {remaining}...", end="", flush=True)
+            time.sleep(1.0)
+        print()
+        try:
+            pyautogui.press(config.confirm_button)
+            print("  Key sent.")
+            print("  If the game did not react, run this launcher as Administrator.")
+        except Exception as exc:
+            print(f"  [error] Could not send key: {exc}")
+        return 0
 
     if args.hotkey_test:
         print_banner(config)
