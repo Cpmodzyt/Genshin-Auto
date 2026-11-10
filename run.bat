@@ -22,6 +22,78 @@ echo [OK] Running as Administrator
 echo.
 
 :: ============================================
+:: Relocation check (Downloads / Desktop / Temp)
+:: ============================================
+set "CUR=%~dp0"
+if "%CUR:~-1%"=="\" set "CUR=%CUR:~0,-1%"
+
+if /i "%CUR%"=="C:\Genshin-Auto" goto :relocate_skip
+if /i "%CUR%"=="D:\Genshin-Auto" goto :relocate_skip
+
+echo "%CUR%" | findstr /i /c:"\Downloads" /c:"\Desktop" /c:"\Temp" /c:"\AppData" /c:"\OneDrive" >nul 2>&1
+if errorlevel 1 goto :relocate_skip
+
+set "TARGET="
+if exist D:\ (
+    echo.>"D:\.genshin_auto_write_test" 2>nul
+    if exist "D:\.genshin_auto_write_test" (
+        del "D:\.genshin_auto_write_test" >nul 2>&1
+        set "TARGET=D:\Genshin-Auto"
+    )
+)
+if not defined TARGET (
+    echo.>"C:\.genshin_auto_write_test" 2>nul
+    if exist "C:\.genshin_auto_write_test" (
+        del "C:\.genshin_auto_write_test" >nul 2>&1
+        set "TARGET=C:\Genshin-Auto"
+    )
+)
+if not defined TARGET (
+    color 0E
+    echo [WARN] Could not find a writable permanent drive. Staying here.
+    goto :relocate_skip
+)
+
+color 0E
+echo.
+echo ============================================
+echo   WARNING: temporary / user folder detected
+echo ============================================
+echo   Current location:
+echo     %CUR%
+echo.
+echo   Downloads, Desktop and Temp can be cleaned up by
+echo   Windows. If this folder disappears, the tool stops.
+echo.
+echo   Recommended permanent location:
+echo     %TARGET%
+echo.
+set /p "MOVE=Copy the tool there now? [Y/N]: "
+if /i not "%MOVE%"=="Y" (
+    echo [OK] Staying in the current location.
+    goto :relocate_skip
+)
+
+echo.
+echo [..] Copying files to %TARGET% ...
+mkdir "%TARGET%" >nul 2>&1
+robocopy "%CUR%" "%TARGET%" /E /XD .venv __pycache__ .git .ruff_cache /XF autoskip.log /NFL /NDL /NJH /NJS /NP >nul
+if errorlevel 8 (
+    color 0C
+    echo [ERROR] Copy failed. Please move the folder manually.
+    goto :relocate_skip
+)
+color 0A
+echo [OK] Copied successfully.
+echo [..] Starting from the permanent location...
+start "" "%TARGET%\run.bat"
+exit /b
+
+:relocate_skip
+color 0A
+echo.
+
+:: ============================================
 :: Python check (3.11+)
 :: ============================================
 where python >nul 2>&1
