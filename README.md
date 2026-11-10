@@ -26,6 +26,7 @@ natural ~1 second interval. It only acts while the game is focused.
 | **Hook-free hotkeys** | Hotkeys are read with `GetAsyncKeyState` instead of a global keyboard hook. Genshin's anti-cheat commonly blocks hooks, which made F8/F9 silently stop working. |
 | **1 second default** | Default delay is now **1.0 s** (configurable), with a little natural jitter — no more press-spam. |
 | **Auto-elevation** | `run.bat` relaunches itself as Administrator so key presses are not ignored. |
+| **Self-checking launcher** | Checks Python 3.11+, reuses the venv, installs only missing dependencies, verifies imports and config, then starts. |
 | **Diagnostics** | `--probe` and `--hotkey-test` tell you exactly what is wrong in seconds. |
 | **Human-like mode** | Randomized intervals, occasional breaks, and "reading" pauses after long skip streaks. |
 | **Session limit** | Optional auto-pause after N active minutes. |
@@ -90,10 +91,17 @@ natural ~1 second interval. It only acts while the game is focused.
 
 ### Option 1 — `run.bat` (recommended)
 
-1. Download or clone this repository.
+1. Clone the repository:
+   ```bat
+   git clone https://github.com/Cpmodzyt/Genshin-Auto.git
+   cd Genshin-Auto
+   ```
+   (Or download the ZIP from the GitHub page.)
 2. Right-click **`run.bat` → Run as administrator**.
    - If you forget, it will ask Windows for elevation itself.
-   - It creates `.venv`, installs dependencies and starts the app.
+   - It verifies Python 3.11+, creates `.venv`, installs only the missing
+     dependencies, re-checks that they import, validates the config, and only
+     then starts the app.
 3. On first run it records your screen size in `.env`.
 
 You can also pass options through the launcher:
