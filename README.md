@@ -48,6 +48,7 @@ natural ~1 second interval. It only acts while the game is focused.
 - [Troubleshooting](#-troubleshooting)
 - [About "anti-detection"](#-about-anti-detection)
 - [Development](#-development)
+- [Acknowledgements](#-acknowledgements)
 - [License](#-license)
 
 ---
@@ -317,7 +318,10 @@ made.
    close them temporarily.
 3. Some keyboards have a **Fn lock** where F8 is media-play. Hold `Fn` or
    switch the Fn lock, or change `START_KEY` to another key in `.env`.
-4. As a fallback use `run.bat --autostart`.
+4. Make sure the console is not in **QuickEdit selection mode**. Clicking or
+   selecting text in a Windows console pauses the program; press `Esc` or
+   right-click inside the console to resume.
+5. As a fallback use `run.bat --autostart`.
 
 ### It runs but dialogue is never skipped
 
@@ -405,6 +409,16 @@ autoskip.log           optional runtime log (git-ignored)
 
 Pull requests are welcome. Please keep changes typed and add tests for pure
 logic (coordinates, colours, timing, config parsing).
+
+---
+
+## 🙏 Acknowledgements
+
+This project is based on the original *Genshin Dialogue Auto-Skip* concept by
+[1hubert](https://github.com/1hubert/genshin-dialogue-autoskip). The detection
+coordinate tables and the MIT license originate there. v2 adds auto-resolution
+detection, DPI awareness, hook-free hotkeys, diagnostics, and the current
+maintenance work.
 
 ---
 
